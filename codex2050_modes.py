@@ -11,10 +11,10 @@ def detect_mode_from_text(text: str) -> Optional[int]:
             return i
     return None
 
-def handle_message(text: str, engine: Codex2050Engine, state: dict) -> str:
+def handle_message(text: str, def handle_message(text: str, engine: Codex2050Engine, state: dict) -> str:
     """
     Zentrale Routing-Funktion.
-    `state` ist ein einfaches Dict pro Chat (persistiert NICHT serverseitig – reiner RAM).
+    `state` ist ein einfaches Dict pro Chat
     """
     t = (text or "").strip()
 
@@ -22,10 +22,24 @@ def handle_message(text: str, engine: Codex2050Engine, state: dict) -> str:
     if t.startswith("/start"):
         state.clear()
         return (
-            "Codex2050 Render‑Bot ist aktiv. 🔥\n\n"
+            "Codex2050 Render-Bot ist aktiv.\n"
             + engine.list_stufen()
         )
 
+    # Reset
+    if t.startswith("/reset"):
+        state.clear()
+        return (
+            "🔄 Reset durchgeführt.\n\n"
+            "Aktive Stufen (Codex2050 – final3):\n"
+            "1. Stufe 1 – Check-In\n"
+            "2. Stufe 2 – Dunkelblauer Zukunftsmodus\n"
+            "3. Stufe 3 – Imperator-Pfad\n"
+            "4. Stufe 4 – Lola x Iki\n"
+            "5. Stufe 5 – Codex / Archiv\n"
+            "6. Stufe 6 – Kettenbrecher-Modus\n\n"
+            "Schreib z.B. `Stufe 2` oder `2`, um in diesen Modus zu gehen."
+        )
     # Stufe wechseln?
     mode = detect_mode_from_text(t)
     if mode is not None:
