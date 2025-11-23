@@ -1,0 +1,30 @@
+{
+    "super_version": "1.2+1.3",
+    "modules": {
+        "core": [
+            "main.py",
+            "codex2050_engine.py",
+            "codex2050_modes.py"
+        ],
+        "deploy": [
+            "requirements.txt",
+            "render.yaml"
+        ],
+        "docs": [
+            "README_GitHub.md",
+            "README_RELEASE.md",
+            "RELEASE_NOTES.md",
+            "DEPLOY_BADGE.md"
+        ],
+        "debug": [
+            "table_improved_1.csv",
+            "table_improved_2.csv"
+        ],
+        "autonomous": [
+            "README_v1.3.md",
+            "autonomous_core.py",
+            "telemetry_tracker.py",
+            "manifest_v1.3.json"
+        ]
+    }
+}

@@ -1,0 +1,5 @@
+Symptom,Grund,Fix,Fehlercode,Reproduzierbarkeit,Betroffene Datei,Patch-Version
+`ModuleNotFoundError: No module named 'codex2050_modes'`,"Alte Import-Zeile ist noch drin, aber `codex2050_modes.py` existiert nicht (wurde ja ersetzt).",Entweder 1) Datei `codex2050_modes.py` mit Dummy-Funktionen nachliefern oder 2) Import-Zeilen 15 + 58 + 116 + 120 löschen und durch die neuen Methoden ersetzen.,C01,,,
+`AttributeError: 'Codex2050Engine' object has no attribute '_users'`,Die `__init__`-Methode im Commit ist unvollständig – `self._users = {}` fehlt.,In `__init__` ergänzen: `self._users = {}`,C02,,,
+Antwortet nur „Unbekannter Befehl“,"`handle_command` schaut nur auf feste Liste (`/start`, `/help`, …). Dein Chat-Frontend sendet vielleicht Leerzeichen, Groß-/Kleinschreibung oder zusätzliche Zeichen.","Debug-Print in `handle_command` einbauen: `print(""CMD:"", repr(command), ""ARG:"", repr(arg))`",C03,,,
+Inline-Queries / Buttons,"Dieser Code unterstützt nur reine Text-Commands – keine Callbacks, keine Inline-Queries.",,C04,,,

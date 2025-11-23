@@ -1,0 +1,8 @@
+Check,Befehl / Ablauf,Status,Letzte Änderung,Automatisierbar
+Python-Version ≥ 3.9?,`python3 --version`,,,
+Fehlende Abhängigkeiten?,`pip install -r requirements.txt` (falls vorhanden),,,
+Start-Crash sichtbar?,Starte den Bot manuell im Vordergrund und kopiere die komplette Fehlermeldung → z. B. `python bot.py`,,,
+Import-Fehler?,Sieht man sofort im Stacktrace.,,,
+Dateiname stimmt?,"`codex2050_engine.py` muss im gleichen Ordner liegen wie die Datei, die `from codex2050_engine import Codex2050Engine` macht.",,,
+Telegram-Token gesetzt?,"`export BOT_TOKEN=""123456:ABC…""` (oder `.env`) – sonst startet der Bot gar nicht erst.",,,
+Rechte / Port?,"Webhooks brauchen HTTPS-Port 443/80, Long-Polling nicht.",,,
