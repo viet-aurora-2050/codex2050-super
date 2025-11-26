@@ -1,0 +1,19 @@
+{
+  "name": "codex2050-super",
+  "version": "v1.3.1-HYBRID-C",
+  "mode": "Autonomous Hybrid C",
+  "created_at": "2025-11-26T05:19:54.846416Z",
+  "files": [
+    "app.py",
+    "codex2050_engine.py",
+    "codex2050_modes.py",
+    "autonomous_core.py",
+    "memory_store.json",
+    "requirements.txt",
+    "render.yaml",
+    "Procfile",
+    "README.md",
+    "VERSION.txt",
+    "SUPER_MANIFEST_v1.3.1.json"
+  ]
+}
