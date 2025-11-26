@@ -1,0 +1,7 @@
+
+services:
+  - type: web
+    name: codex2050
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn telegram.main:app
