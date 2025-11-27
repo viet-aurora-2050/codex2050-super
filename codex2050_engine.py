@@ -19,7 +19,7 @@ def handle_message(text: str, meta: Dict[str, Any]) -> str:
     if any(k in lower for k in ["super 6", "super6", "super-6"]):
         draw = super6_simulation()
         return (
-            "🎰 *Super 6 – Simulierte Ziehung*
+            # 🏛️ Super 6 – Simulierte Ziehung
 
 "
             f"Zahl: `{draw}`
