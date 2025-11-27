@@ -1,7 +1,7 @@
 services:
   - type: web
     name: codex2050-super
-    env: python
+    runtime: python
     plan: free
     buildCommand: ""
     startCommand: "gunicorn app:app"
