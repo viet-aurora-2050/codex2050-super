@@ -1,1 +1,1 @@
-# Webhook logic
+from app import app as application

@@ -1,24 +1,27 @@
-# Codex2050 Modes – Simple Resolver v1.3.1
+from typing import Optional
 
-def resolve_mode(text: str) -> str:
-    if not text:
-        return "default"
 
-    t = text.lower().strip()
+def detect_mode(text: str) -> Optional[str]:
+    """
+    Sehr einfacher Modus-Detektor.
+    Keine festen Personennamen – nur Themenfelder.
+    """
+    t = text.lower()
 
-    if "/start" in t or "start" == t:
-        return "checkin"
-    if "lola" in t or "iki" in t:
-        return "lola-x-iki"
-    if "geld" in t or "money" in t or "cash" in t:
-        return "money"
-    if "pati" in t or "liebe" in t or "love" in t:
-        return "love"
-    if "sancho" in t and "vision" in t:
-        return "sancho-vision"
-    if "dunkelblau" in t or "darkblue" in t:
-        return "darkblue"
-    if "kettenbrecher" in t:
-        return "chains"
+    # Liebe / Frauen / Beziehung
+    if any(k in t for k in ["liebe", "frau", "frauen", "beziehung", "nähe", "alleine", "einsam", "herz", "crush"]):
+        return "liebe"
 
-    return "default"
+    # Business / Arbeit / Restaurant / Projekt
+    if any(k in t for k in ["business", "firma", "restaurant", "projekt", "umsatz", "kunden", "vertrag", "mieter", "miete"]):
+        return "business"
+
+    # Geld / Rechnungen / Schulden
+    if any(k in t for k in ["geld", "rechnung", "miete", "schulden", "konto", "dispo", "mahnung"]):
+        return "geld"
+
+    # Körper / Fitness / Müdigkeit
+    if any(k in t for k in ["körper", "müde", "erschöpft", "fitness", "sport", "krank", "energie"]):
+        return "körper"
+
+    return None

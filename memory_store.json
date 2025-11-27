@@ -1,7 +1,9 @@
 {
-  "version": "v1.3.1-HYBRID-C",
-  "notes": [
-    "Dieses Memory-File ist ein Platzhalter für zukünftige Zustandsdaten.",
-    "Es kann von autonomous_core erweitert und persistiert werden."
-  ]
+  "version": "1.3.3-darkdeploy-autonomous",
+  "notes": "Platzhalter für zukünftige Persistenz (z.B. letzte Lotto-Echos, Fokus-Logs, etc.).",
+  "lotto": {
+    "super6": [],
+    "spiel77": [],
+    "eurojackpot_echo": []
+  }
 }

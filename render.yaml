@@ -2,11 +2,6 @@ services:
   - type: web
     name: codex2050-super
     env: python
-    buildCommand: "pip install -r requirements.txt"
+    plan: free
+    buildCommand: ""
     startCommand: "gunicorn app:app"
-    autoDeploy: true
-    envVars:
-      - key: PYTHON_VERSION
-        value: 3.10.12
-      - key: TELEGRAM_TOKEN
-        sync: false
