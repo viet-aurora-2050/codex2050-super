@@ -12,32 +12,39 @@ def handle_message(text: str, meta: Dict[str, Any]) -> str:
     Zentrale Logik für eingehende Telegram-Nachrichten im Codex2050-DarkDeploy-Autonomous-Modus.
     Keine Person wird namentlich hartkodiert – Liebes-/Frauenthemen bleiben allgemein.
     """
-    raw = text.strip()
-    lower = raw.lower()
+    def format_super6_draw(draw):
+    """
+    Formatiert eine simulierte oder echte Super-6 Ziehung.
+    draw = ["1", "4", "7", "0", "8", "3"]
+    """
+    numbers = " ".join(draw)
+    msg = (
+        "🏦 Super 6 – Simulierte Ziehung\n"
+        "──────────────────────────────\n"
+        f"Zahlen: {numbers}\n"
+        "Status: gespeichert · Echo aktiv"
+    )
+    return msg
 
-    # 1) Lotto / Super 6 / Spiel 77 / Echo-Scan
-    if any(k in lower for k in ["super 6", "super6", "super-6"]):
-        draw = super6_simulation()
-        return (
-            # 🏛️ Super 6 – Simulierte Ziehung
 
-"
-            f"Zahl: `{draw}`
-"
-            "_Modus: DarkDeploy v1.3.3 (Offline-Simulator, kein offizieller Ziehungsdienst)_"
-        )
+def handle_super6():
+    """Simuliert automatisch eine Ziehung und speichert sie."""
+    import random
+    draw = [str(random.randint(0, 9)) for _ in range(6)]
 
-    if any(k in lower for k in ["spiel 77", "spiel77", " 77", "77 "]) and "super" not in lower:
-        draw = spiel77_simulation()
-        return (
-            "🎰 *Spiel 77 – Simulierte Ziehung*
+    # Memory speichern
+    try:
+        with open("memory_store.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except:
+        data = {"lotto": {"super6": []}}
 
-"
-            f"Zahl: `{draw}`
-"
-            "_Modus: DarkDeploy v1.3.3 (Offline-Simulator, kein offizieller Ziehungsdienst)_"
-        )
+    data["lotto"]["super6"].append(draw)
 
+    with open("memory_store.json", "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
+
+    return format_super6_draw(draw)
     if "echo" in lower or "eurojackpot" in lower:
         numbers, euro = eurojackpot_echo_simulation()
         nums_str = ", ".join(str(n) for n in numbers)
