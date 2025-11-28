@@ -1,1 +1,4 @@
-TELEGRAM_TOKEN = "8382425226:AAEjUFqyYcB6AUQnvjQHtmb4zYtRC0P0aM0"
+import os
+
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "YOUR_TELEGRAM_TOKEN_HERE")
+WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://codex2050-super.onrender.com/webhook")

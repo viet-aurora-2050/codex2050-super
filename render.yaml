@@ -1,8 +1,17 @@
+# Exported from Render – Codex2050 Super v4
+version: "1"
 services:
-  - type: web
-    name: codex2050-super
-    runtime: python
-    region: frankfurt
-    plan: free
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn app:app"
+- type: web
+  name: "Codex 2050 super"
+  runtime: python
+  repo: https://github.com/viet-aurora-2050/codex2050-super
+  plan: starter
+  envVars:
+  - key: TELEGRAM_TOKEN
+    sync: false
+  - key: WEBHOOK_URL
+    sync: false
+  region: frankfurt
+  buildCommand: pip install -r requirements.txt
+  startCommand: gunicorn app:app
+  autoDeployTrigger: commit

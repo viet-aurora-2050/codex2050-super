@@ -1,5 +1,7 @@
 {
-  "super6": [],
-  "spiel77": [],
-  "echo": []
+    "lotto": {
+        "super6": [],
+        "spiel77": [],
+        "eurojackpot": []
+    }
 }
