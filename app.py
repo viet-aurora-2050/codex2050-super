@@ -1,69 +1,40 @@
-import os
-import json
-import logging
-
-import requests
 from flask import Flask, request
-
+import requests
+import config
 from codex2050_engine import handle_message
 
 app = Flask(__name__)
-logging.basicConfig(level=logging.INFO)
 
-TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
-if not TELEGRAM_TOKEN:
-    raise RuntimeError("TELEGRAM_TOKEN environment variable is not set")
-
-TELEGRAM_API = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
+TOKEN = config.TELEGRAM_TOKEN
+API = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
 
 
-def send_message(chat_id: int, text: str) -> None:
-    """Schickt eine Antwort an Telegram."""
-    if len(text) > 3900:
-        text = text[:3900] + "\n…[gekürzt]"
-    try:
-        requests.post(
-            f"{TELEGRAM_API}/sendMessage",
-            json={"chat_id": chat_id, "text": text},
-            timeout=10,
-        )
-    except Exception as e:
-        app.logger.error(f"send_message error: {e}")
+def send(chat_id, text):
+    requests.post(API, json={"chat_id": chat_id, "text": text})
 
 
 @app.route("/", methods=["GET"])
 def index():
-    """Healthcheck – wird z.B. von Render aufgerufen."""
-    return "Codex2050 Render Bot online", 200
+    return "Codex2050 Super v3.0 · Sancho-Core aktiv", 200
 
 
-@app.route("/", methods=["POST"])
+@app.route("/webhook", methods=["POST"])
 def webhook():
-    """Telegram Webhook Endpoint."""
-    update = request.get_json(force=True, silent=True) or {}
-    app.logger.info("Update: %s", json.dumps(update))
+    data = request.get_json()
 
-    message = update.get("message") or update.get("edited_message") or {}
-    text = message.get("text") or ""
-    chat = message.get("chat") or {}
-    chat_id = chat.get("id")
+    if not data:
+        return "no data", 200
 
-    # Nichts Sinnvolles drin → einfach OK sagen
-    if not chat_id or not text:
-        return "no message", 200
+    msg = data.get("message", {})
+    text = msg.get("text", "")
+    chat_id = msg.get("chat", {}).get("id")
 
-    # Deine Engine
-    try:
+    if text and chat_id:
         reply = handle_message(text)
-    except Exception as e:
-        app.logger.error(f"handle_message error: {e}")
-        reply = "⚠️ Interner Fehler im Codex2050-Engine-Modul."
-
-    if reply:
-        send_message(chat_id, reply)
+        send(chat_id, reply)
 
     return "ok", 200
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=10000)
