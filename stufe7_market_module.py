@@ -1,2 +1,2 @@
-# Market Module
-MARKT = lambda x: f"📈 Marktanalyse: {x}"
+# Codex2050 Marktmodul – Ökonomische Antwortlogik
+MARKT = lambda x: f"📈 Marktanalyse folgt für: {x}"

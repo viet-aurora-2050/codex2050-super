@@ -1,2 +1,2 @@
-# User Profile System
+# Benutzerprofil-System – Ziel: individuelle Nutzer-Strategie
 USER_PROFILES = {}
