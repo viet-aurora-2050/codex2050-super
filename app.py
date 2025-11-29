@@ -1,31 +1,40 @@
-
 import os
-from flask import Flask, request
 import requests
+from flask import Flask, request
 
-from codex2050_engine import handle_message
-
-TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
-if not TELEGRAM_TOKEN:
-    raise RuntimeError("TELEGRAM_TOKEN not set in environment")
-
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 API = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
 
 app = Flask(__name__)
 
-
-def send_message(chat_id: int, text: str) -> None:
-    """Send a text message back to Telegram."""
+def send_message(chat_id: int, text: str):
     try:
+        print(f"[send] → {text}", flush=True)
         requests.post(
             f"{API}/sendMessage",
             json={"chat_id": chat_id, "text": text},
             timeout=10,
         )
     except Exception as exc:
-        # We just log to stdout; Render will capture logs
         print(f"[send_message] error: {exc}", flush=True)
 
+# ————————————————————————————————
+# ZENTRUM: Antwort-Logik (jetzt wirklich vorhanden)
+# ————————————————————————————————
+
+def handle_message(text: str) -> str:
+    t = text.lower().strip()
+
+    if t == "sancho":
+        return "Ich bin da. Codex2050 aktiv."
+    if t == "/start":
+        return "AURORA 2050 – Render Bot Modul.\nWebhook online."
+    if t == "ping":
+        return "pong 🛰️"
+
+    return f"Echo: {text}"
+
+# ————————————————————————————————
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
@@ -44,12 +53,9 @@ def webhook():
 
     return {"status": "ok"}, 200
 
-
 @app.route("/", methods=["GET"])
 def index():
-    return "Codex2050 Kernel Ultra – Render online", 200
+    return "Codex2050 Render Bot läuft."
 
-
-# Export for gunicorn
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
+# gunicorn export
+app = app
